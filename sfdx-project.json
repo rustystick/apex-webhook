@@ -1,0 +1,21 @@
+{
+    "packageDirectories": [
+        {
+            "path": "webhook",
+            "default": true,
+            "package": "EventWebhook",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.1.NEXT"
+        }
+    ],
+    "name": "apex-webhook-framework",
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "54.0",
+    "packageAliases": {
+        "EventWebhook": "0Ho8a0000008ONBCA2",
+        "apex-webhook": "0Ho8a0000008ONBCA2",
+        "apex-webhook@0.1.0": "04t8a000000h5ChAAI",
+        "EventWebhook@0.1.1-8": "04t8a000001VoYJAA0"
+    }
+}

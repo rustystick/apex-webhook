@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Stores the event body processor class name for particular event type. This alters the content data when get one template api is called. Body processor must implement NTFH_NotificationTemplate.BodyProcessor interface.</description>
+    <label>NTFH Webhook Event Body Processor</label>
+    <pluralLabel>NTFH Webhook Event Body Processors</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
