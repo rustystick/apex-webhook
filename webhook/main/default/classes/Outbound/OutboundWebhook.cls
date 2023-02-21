@@ -2,9 +2,9 @@
  * @description entry point to get all parameter need to start the callout batch for a (set of) Outbound_Webhook__e platform events
  * @author Andi Xie
  */
-public class OutboundWebhook {
-    static Integer MAX_BATCH_SIZE = Limits.getLimitCallouts();
-    static String WEBHOOK_EVENT_LISTENER_STATUS_ACTIVE = OutboundWebhookRegistration.REGISTRATION_STATUS_ACTIVE;
+public with sharing class OutboundWebhook {
+    static final Integer MAX_BATCH_SIZE = 100;
+    static final String WEBHOOK_EVENT_LISTENER_STATUS_ACTIVE = OutboundWebhookRegistration.REGISTRATION_STATUS_ACTIVE;
     @TestVisible
     private static List<Outbound_Webhook__e> eventsReceived = new List<Outbound_Webhook__e>();
     Map<String, List<Webhook_Registration__c>> eventNameToListenerMap;
@@ -34,10 +34,12 @@ public class OutboundWebhook {
             eventNameMap.put(type, new List<Outbound_Webhook__e>{ event });
             eventsReceived.add(event);
         }
+
         List<Webhook_Registration__c> applicableListeners = [
             SELECT Callback_Url__c, Shared_Secret__c, Event__c, Header__c
             FROM Webhook_Registration__c
-            WHERE Event__c IN :eventNames AND Status__c = :WEBHOOK_EVENT_LISTENER_STATUS_ACTIVE
+            WHERE Event__c IN :eventNames AND Status__c = :WEBHOOK_EVENT_LISTENER_STATUS_ACTIVE 
+            WITH SECURITY_ENFORCED
         ];
         for (Webhook_Registration__c listener : applicableListeners) {
             List<Webhook_Registration__c> regList = eventNameToListenerMap.get(listener.Event__c);
@@ -46,11 +48,15 @@ public class OutboundWebhook {
         this.eventNameToListenerMap = eventNameTOListenerMap;
         this.eventNameMap = eventNameMap;
         this.events = events;
+        loadBodyProcessor();
+    }
 
+    private void loadBodyProcessor() {
         for (Webhook_Event_Setting__mdt setting : [
             SELECT Body_Processor_Apex_Class_Name__c, Event_Type__c
             FROM Webhook_Event_Setting__mdt
             WHERE Event_Type__c IN :eventNames
+            WITH SECURITY_ENFORCED
         ]) {
             if (setting.Body_Processor_Apex_Class_Name__c == null) {
                 continue;
@@ -70,9 +76,9 @@ public class OutboundWebhook {
     }
 
     Integer getBatchSize() {
-        Integer ORG_SETTING_BATCH_SIZE = Webhook_Settings__c.getOrgDefaults().Batch_Size__c == null
+        Integer orgSettingBatchSize = Webhook_Settings__c.getOrgDefaults().Batch_Size__c == null
             ? MAX_BATCH_SIZE
             : (Integer) Webhook_Settings__c.getOrgDefaults().Batch_Size__c;
-        return ORG_SETTING_BATCH_SIZE > MAX_BATCH_SIZE ? MAX_BATCH_SIZE : ORG_SETTING_BATCH_SIZE;
+        return orgSettingBatchSize > MAX_BATCH_SIZE ? MAX_BATCH_SIZE : orgSettingBatchSize;
     }
 }

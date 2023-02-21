@@ -26,7 +26,7 @@ public class InboundWebhookTest {
         EventBus.publish(event);
         Test.getEventBus().deliver();
         Test.stopTest();
-        System.assertEquals(true, mockHandlerRan);
+        System.assertEquals(true, mockHandlerRan, 'mock handler should have ran');
     }
 
     /**

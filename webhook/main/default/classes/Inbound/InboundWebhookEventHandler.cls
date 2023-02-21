@@ -58,7 +58,9 @@ public abstract class InboundWebhookEventHandler implements Queueable, Database.
             }
         }
 
-        if(handlers.size() == 0) return;
+        if(handlers.size() == 0) {
+            return;
+        }
         // start next handler if there is any 
         String nextClassName = handlers.remove(0);
         InboundWebhookEventHandler nextProcessor = (InboundWebhookEventHandler)Type.forName(nextClassName).newInstance();
@@ -71,7 +73,9 @@ public abstract class InboundWebhookEventHandler implements Queueable, Database.
     }
 
     protected List<Inbound_Webhook__e> getEvents(){
-        if(events != null) return events;
+        if(events != null) {
+            return events;
+        }
         String eventName = getEventTypeName();
         events = eventMap.get(eventName).deepClone(true, false, false);
         return events;

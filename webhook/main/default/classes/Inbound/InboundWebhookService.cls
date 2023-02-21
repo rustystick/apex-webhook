@@ -89,8 +89,6 @@ global with sharing class InboundWebhookService {
         String message = 'Success';
         @testVisible
         String correlationId;
-        public InboundWebhookResponse() {
-        }
         public void setError(Exception ex) {
             hasError = true;
             message = ex.getMessage();

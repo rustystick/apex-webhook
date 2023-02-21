@@ -6,8 +6,8 @@
 private class OutboundWebhookRegistrationApiTest {
     static String urlMapping = '/services/apexrest/webhook/v1/registration';
     static String endPoint = URL.getSalesforceBaseUrl() + urlMapping;
-    static List<String> DEFAULT_TEST_EVENT_TYPE = new List<String>{ 'event1', 'event2' };
-    static Map<String, String> DEFAULT_TEST_HEADER = new Map<String, String>{ 'Content-Type' => 'application/json' };
+    static final List<String> DEFAULT_TEST_EVENT_TYPE = new List<String>{ 'event1', 'event2' };
+    static final Map<String, String> DEFAULT_TEST_HEADER = new Map<String, String>{ 'Content-Type' => 'application/json' };
     static final String DEFAULT_TEST_SUBSCRIBER_URLS = WebhookTestFactory.TEST_BASE_URL;
     static final string STATUS_PENDING_CONFIRMATION = 'Pending Confirmation';
     static final Integer URL_MAX_LENGTH = OutboundWebhookApiService.URL_MAX_LENGTH;

@@ -44,7 +44,9 @@ public with sharing class InboundWebhook {
     }
 
     List<String> getHandlerNames() {
-        if(handlerNames != null) return handlerNames;
+        if(handlerNames != null) {
+            return handlerNames;
+        }
         String extendsHandler = 'extends ' + InboundWebhookEventHandler.class.getName();
         List<List<SObject>> queryResult = [FIND :extendsHandler IN ALL FIELDS RETURNING ApexClass(Name)];
         handlerNames = createNameList(queryResult[0]);
@@ -54,8 +56,9 @@ public with sharing class InboundWebhook {
     List<String> createNameList(List<SObject> queryResult) {
         List<String> classNameList = new List<String>();
         for (ApexClass classCandidate : (List<ApexClass>) queryResult) {
-            if (!EXCLUDED_CLASS_NAMES.contains(classCandidate.Name))
+            if (!EXCLUDED_CLASS_NAMES.contains(classCandidate.Name)){
                 classNameList.add(classCandidate.Name);
+            }
         }
         return classNameList;
     }
