@@ -28,21 +28,21 @@ Many SASS provider (e.g. Marketing Cloud, Twilio, Slack) uses webhook as a confi
 
 ## Process Flow
 ### Receiving
-::: mermaid
+``` mermaid
  graph LR;
  A(Event Source) --> |POST| B(Unauthenticated Endpoint);
  B --> |verify signature| C{verified?}
  C --> |no| D[end]
  C --> |yes| E[Publish Platform Event]
-:::
+```
 
 ### Event Handler
-::: mermaid
+``` mermaid
  graph LR;
  A(Received Platform Event) --> |instantiate event handlers| event-handlers(Handlers);
  event-handlers --> |handle event| handle-event(Handle Event)
-:::
-::: mermaid
+```
+``` mermaid
  graph LR;
  subgraph handlers[Event Handlers]
  subgraph handler1[Handler 1]
@@ -56,7 +56,7 @@ Many SASS provider (e.g. Marketing Cloud, Twilio, Slack) uses webhook as a confi
  end
  next --> handler2
  handler2 --> ...
-:::
+```
 
 
 ## Components
@@ -97,7 +97,7 @@ The solution implemented is an outbound webhook framework leveraging platform ev
 ## Flow
 
 ### Firing an event
-::: mermaid
+``` mermaid
  graph LR;
  A(event is fired) --> |eventName| B{Has listener?};
  subgraph eventListener[Apex Listener]
@@ -110,7 +110,7 @@ The solution implemented is an outbound webhook framework leveraging platform ev
  D --> E
  B --> |no| E(End)
  end
-:::
+```
 
 
 ## Components
